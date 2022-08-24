@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 
-const auth = getAuth();
+const auth = getAuth(); 
 class App extends React.Component {
   handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,6 +19,7 @@ class App extends React.Component {
     flag: false,
   };
   configureCaptcha = () => {
+    console.log("Second")
     window.recaptchaVerifier = new RecaptchaVerifier(
       "sign-in-button",
       {
@@ -31,15 +32,18 @@ class App extends React.Component {
       },
       auth
     );
+    console.log("Third");
   };
   onSignInSubmit = (e) => {
     e.preventDefault();
+    console.log("First");
     this.configureCaptcha();
     const phoneNumber = "+91" + this.state.mobile;
     console.log(phoneNumber);
     const appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
+        console.log("Fourth");
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         this.setState({
