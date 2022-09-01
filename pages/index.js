@@ -70,6 +70,7 @@ class App extends React.Component {
         const user = result.user;
         console.log(user);
         user.getIdToken().then((idToken) => {
+          console.log(idToken);
           const options = {
             method: "GET",
             url: "https://epvitechbackend.herokuapp.com/sessionlogin",
