@@ -19,7 +19,6 @@ class App extends React.Component {
     flag: false,
   };
   configureCaptcha = () => {
-    console.log("Second")
     window.recaptchaVerifier = new RecaptchaVerifier(
       "sign-in-button",
       {
@@ -32,18 +31,14 @@ class App extends React.Component {
       },
       auth
     );
-    console.log("Third");
   };
   onSignInSubmit = (e) => {
     e.preventDefault();
-    console.log("First");
     this.configureCaptcha();
     const phoneNumber = "+91" + this.state.mobile;
-    console.log(phoneNumber);
     const appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
-        console.log("Fourth");
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         this.setState({
@@ -61,16 +56,13 @@ class App extends React.Component {
   onSubmitOTP = (e) => {
     e.preventDefault();
     const code = this.state.otp;
-    console.log(code);
 
     confirmationResult
       .confirm(code)
       .then((result) => {
         // User signed in successfully.
         const user = result.user;
-        console.log(user);
         user.getIdToken().then((idToken) => {
-          console.log(idToken);
           const options = {
             method: "GET",
             url: "https://epvitechbackend.herokuapp.com/sessionlogin",
@@ -82,12 +74,10 @@ class App extends React.Component {
           axios
             .request(options)
             .then(function (response) {
-              // console.log(response.data);
               const queryString = window.location.search;
               const urlParams = new URLSearchParams(queryString);
               let state = urlParams.get("state");
               let redirect_uri = urlParams.get("redirect_uri");
-              // console.log(redirect_uri);
               window.location = `${redirect_uri}/?state=${state}&code=${result.user.uid}`;
             })
             .catch(function (error) {
