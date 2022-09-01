@@ -65,7 +65,7 @@ class App extends React.Component {
         user.getIdToken().then((idToken) => {
           const options = {
             method: "GET",
-            url: "https://epvitechbackend.herokuapp.com/sessionlogin",
+            url: "https://epvitechbackenddev.herokuapp.com/sessionlogin",
             headers: {
               "Access-Control-Allow-Origin": "*",
               gettoken: idToken,
